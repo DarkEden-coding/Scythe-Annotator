@@ -163,3 +163,7 @@ cython_debug/
 #.idea/
 
 /train_augmentation_model/runs/
+/output/
+!/train_augmentation_model/yolo11l.pt
+
+!/train_augmentation_model/yolo11m.pt
