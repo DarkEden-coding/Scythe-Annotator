@@ -1,15 +1,11 @@
-
 name: Package Application with Pyinstaller
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  release:
+    types: [published]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
