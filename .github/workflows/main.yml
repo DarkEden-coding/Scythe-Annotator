@@ -25,3 +25,13 @@ jobs:
       - name: Build EXE
         run: |
           pyinstaller src/main.py --onedir --windowed --noconfirm --distpath ./dist --workpath ./build
+
+      - name: Debug File Path
+        run: dir dist/main
+
+      - name: Upload EXE to Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/main/main.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
