@@ -24,7 +24,7 @@ jobs:
 
       - name: Build EXE
         run: |
-          pyinstaller src/main.py --onedir --windowed --noconfirm --distpath . --workpath .
+          pyinstaller src/main.py --onedir --windowed --noconfirm --distpath ./dist --workpath ./build
 
       - name: Find EXE
         id: find-exe
