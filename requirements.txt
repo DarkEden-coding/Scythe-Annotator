@@ -6,3 +6,4 @@ tqdm~=4.67.1
 ImageHash~=4.3.1
 numpy~=2.2.1
 ultralytics~=8.3.65
+future~=1.0.0
