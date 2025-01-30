@@ -1,0 +1,24 @@
+name: Package Application with Pyinstaller
+
+on:
+  push:
+    tags:
+      - 'v*'  # Trigger only when a new version tag (e.g., v1.0.0) is pushed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Package Application
+        uses: JackMcKew/pyinstaller-action-windows@main
+        with:
+          path: /
+
+      - name: Upload Executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: application-exe
+          path: dist/windows/
