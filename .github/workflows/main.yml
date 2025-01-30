@@ -42,3 +42,4 @@ jobs:
           files: "${{ steps.find-exe.outputs.exe_path }}"
         env:
           GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+
