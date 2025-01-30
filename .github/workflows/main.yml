@@ -25,15 +25,3 @@ jobs:
       - name: Build EXE
         run: |
           pyinstaller src/main.py --onedir --windowed --noconfirm --distpath ./dist --workpath ./build
-
-      - name: Find EXE
-        id: find-exe
-        run: |
-          echo "::set-output name=exe_path::$(Get-ChildItem -Path . -Filter main.exe -Recurse | Select-Object -ExpandProperty FullName)"
-
-      - name: Upload EXE to Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: "${{ steps.find-exe.outputs.exe_path }}"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
