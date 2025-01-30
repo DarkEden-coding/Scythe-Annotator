@@ -7,18 +7,19 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Package Application
-        uses: JackMcKew/pyinstaller-action-windows@main
+      - uses: actions/checkout@v1
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
         with:
-          path: /
-
-      - name: Upload Executable
-        uses: actions/upload-artifact@v4
-        with:
-          name: application-exe
-          path: dist/windows/
+          python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
+          pip install -r requirements.txt
+      - name: build with pyinstaller
+        run: |
+          pyinstaller main.spec
