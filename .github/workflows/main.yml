@@ -1,25 +1,39 @@
-
-name: Package Application with Pyinstaller
+name: Build and Release EXE
 
 on:
-  push:
-    tags:
-      - 'v*'
+  release:
+    types: [created]
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Package Application
-      uses: JackMcKew/pyinstaller-action-windows@main
-      with:
-        path: src
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
 
-    - uses: actions/upload-artifact@v4
-      with:
-        name: name-of-artifact
-        path: dist/windows
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
+
+      - name: Build EXE
+        run: |
+          pyinstaller src/main.py --onedir --windowed --noconfirm --distpath . --workpath .
+
+      - name: Find EXE
+        id: find-exe
+        run: |
+          echo "::set-output name=exe_path::$(Get-ChildItem -Path . -Filter main.exe -Recurse | Select-Object -ExpandProperty FullName)"
+
+      - name: Upload EXE to Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: "${{ steps.find-exe.outputs.exe_path }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
