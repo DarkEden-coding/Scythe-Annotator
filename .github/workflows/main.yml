@@ -31,15 +31,13 @@ jobs:
         run: |
           pyinstaller src/main.py --onedir --windowed --noconfirm --distpath ./dist --workpath ./build
 
-      - name: Find EXE
-        id: find-exe
+      - name: Create ZIP Archive
         run: |
-          echo "::set-output name=exe_path::$(Get-ChildItem -Path . -Filter main.exe -Recurse | Select-Object -ExpandProperty FullName)"
+          powershell Compress-Archive -Path dist -DestinationPath dist.zip
 
-      - name: Upload EXE to Release
+      - name: Upload Dist ZIP to Release
         uses: softprops/action-gh-release@v1
         with:
-          files: "${{ steps.find-exe.outputs.exe_path }}"
+          files: "dist.zip"
         env:
           GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
-
