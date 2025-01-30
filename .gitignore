@@ -167,3 +167,4 @@ cython_debug/
 /train_augmentation_model/yolo11m.pt
 
 !/Windows-Exe/*
+!main.spec
